@@ -1,0 +1,40 @@
+# Combine WOS files
+# List and load files
+file_list <- list.files(pattern = "savedrecs \\(\\d+\\)\\.txt")
+data <- lapply(file_list, function(file) readLines(file))
+
+# Combine files
+combinedwos_data <- unlist(data)
+
+# Convert combined data to a data frame
+combinedwos_data <- data.frame(Text = combined_data)
+
+library(writexl)
+write_xlsx(combinedwos_data, "combined_datawos.xlsx")
+
+#---------------
+
+# Combine Scopus files
+# Get a list of all BibTeX files in the directory
+bibtex_files <- list.files(pattern = "\\.bib$")
+
+# Read each BibTeX file and combine them
+combined_bibtex_data <- unlist(lapply(bibtex_files, readLines))
+
+# Write the combined data to a new BibTeX file
+writeLines(combined_bibtex_data, "Combinedscopus_data.bib")
+
+
+# Combine WoS and Scopus files
+
+library(bibliometrix)
+wos_data<-convert2df("WoS.txt")
+scopus_data<-convert2df("scopus.bib", dbsource = "scopus", format = "bibtex")
+
+combined_data<-mergeDbSources(wos_data, scopus_data, remove.duplicated = T)
+
+library(writexl)
+write_xlsx(combined_data, "combined_data.xlsx")
+
+
+
