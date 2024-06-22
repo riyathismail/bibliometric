@@ -42,3 +42,38 @@ write_xlsx(combined_data, "combined_data.xlsx")
 
 
 
+############  Bibtext   ##########
+
+# 1-3. (These steps involve downloading, installing, and opening RStudio)
+
+# 1. Install bibliometrix package (if not already installed)
+# install.packages("bibliometrix")
+
+# 2. Load the bibliometrix package
+library(bibliometrix)
+
+# 3. Import and convert Scopus file
+scopus_converted <- convert2df("scopus.csv", dbsource="scopus", format="csv")
+
+# 4. Import and convert Web of Science file
+wos_converted <- convert2df("wos.bib", dbsource="wos", format="bibtex")
+
+# 5. Combine or merge the datasets
+combined <- mergeDbSources(scopus_converted, wos_converted, remove.duplicated=TRUE)
+
+# 6. Load openxlsx package
+library(openxlsx)
+
+# 7. Export the combined dataset
+write.xlsx(combined, "combined.xlsx")
+
+
+
+# Update bibliometrix package
+#install.packages("bibliometrix")
+# Reload the package
+library(bibliometrix)
+# Try running Biblioshiny
+biblioshiny()
+
+
