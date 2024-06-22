@@ -1,3 +1,7 @@
+# Load required libraries
+library(writexl)
+library(bibliometrix)
+
 # Combine WOS files
 # List and load files
 file_list <- list.files(pattern = "savedrecs \\(\\d+\\)\\.txt")
@@ -6,11 +10,11 @@ data <- lapply(file_list, function(file) readLines(file))
 # Combine files
 combinedwos_data <- unlist(data)
 
-# Convert combined data to a data frame
-combinedwos_data <- data.frame(Text = combined_data)
+# Write combined WoS data to WoS.txt
+writeLines(combinedwos_data, "WoS.txt")
 
-library(writexl)
-write_xlsx(combinedwos_data, "combined_datawos.xlsx")
+# Convert combined WoS data to a data frame
+combinedwos_df <- data.frame(Text = combinedwos_data)
 
 #---------------
 
